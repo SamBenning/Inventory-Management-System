@@ -19,5 +19,19 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+
+        Product testProduct = new Product(1, "test", 1.05, 10, 1, 12);
+        Product testProduct2 = new Product(2, "test", 1.11, 18, 1, 20);
+        Part testPart = new Part(1, "testpart", 1.10, 8, 1, 15);
+        Inventory testInventory = new Inventory();
+        System.out.println(testProduct.getName());
+        Inventory.addProduct(testProduct);
+        Inventory.addProduct(testProduct2);
+        Inventory.addPart(testPart);
+        Inventory.lookupProduct("test").forEach( prod -> System.out.println(prod.getName() + " " + prod.getId()));
+        System.out.println((Inventory.lookupPart(1)).getName());
+
+
+        System.out.println("hi there");
     }
 }

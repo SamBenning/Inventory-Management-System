@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<GridPane alignment="center" hgap="10" prefHeight="393.0" prefWidth="349.0" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="sample.Controller">
+<GridPane alignment="center" hgap="10" prefHeight="393.0" prefWidth="349.0" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16" fx:controller="sample.Controller.Controller">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>

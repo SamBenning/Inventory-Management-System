@@ -1,7 +1,8 @@
-package sample;
+package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Model.Part;
 
 public class Product extends Part {
 

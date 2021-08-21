@@ -1,11 +1,10 @@
-package sample;
+package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class Inventory {
     private static ObservableList<Part> allParts;

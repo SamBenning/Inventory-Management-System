@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.MainController">
+   <children>
+      <Label text="Inventory Management System" />
+      <HBox>
+         <children>
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <Label text="Parts" />
+                        <TextField fx:id="partSearch" onKeyTyped="#searchPartTableHandler" promptText="Search by name or ID" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="partsTable">
+                     <columns>
+                        <TableColumn fx:id="partIdCol" prefWidth="65.0" text="Part ID" />
+                        <TableColumn fx:id="partNameCol" prefWidth="115.0" text="PartName" />
+                        <TableColumn fx:id="partInventoryCol" prefWidth="115.0" text="Inventory Level" />
+                        <TableColumn fx:id="partUnitCostCol" prefWidth="115.0" text="Price/ Cost per Unit" />
+                     </columns></TableView>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Button" />
+                        <Button mnemonicParsing="false" text="Button" />
+                        <Button mnemonicParsing="false" text="Button" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <Label text="Products" />
+                        <TextField fx:id="productSearch" onKeyTyped="#searchProductTableHandler" promptText="Search by name or ID" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="productsTable">
+                     <columns>
+                        <TableColumn fx:id="productIdCol" prefWidth="65.0" text="Product ID" />
+                        <TableColumn fx:id="productNameCol" prefWidth="115.0" text="Product Name" />
+                        <TableColumn fx:id="productInventoryCol" prefWidth="115.0" text="Inventory Level" />
+                        <TableColumn fx:id="productUnitCostCol" prefWidth="115.0" text="Price/ Cost per Unit" />
+                     </columns></TableView>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Button" />
+                        <Button mnemonicParsing="false" text="Button" />
+                        <Button mnemonicParsing="false" text="Button" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Button mnemonicParsing="false" text="Button" />
+   </children>
+</VBox>

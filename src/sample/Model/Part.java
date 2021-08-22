@@ -2,7 +2,7 @@ package sample.Model;
 
 import javafx.collections.ObservableList;
 
-public class Part {
+public abstract class Part {
 
     private int id;
     private String name;
@@ -18,6 +18,15 @@ public class Part {
         this.stock = stock;
         this.min = min;
         this.max = max;
+    }
+
+    public Part() {
+        this.id = 0;
+        this.name = "";
+        this.price = -1;
+        this.stock = -1;
+        this.min = -1;
+        this.max = -1;
     }
 
     public int getId() {

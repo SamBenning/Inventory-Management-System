@@ -1,14 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.View.AddPartForm"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AddPartController">
+   <children>
+      <VBox>
+         <children>
+            <HBox>
+               <children>
+                  <Label prefHeight="100.0" prefWidth="125.0" text="ADD PART">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <RadioButton mnemonicParsing="false" text="RadioButton" />
+                  <RadioButton mnemonicParsing="false" text="RadioButton" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label prefHeight="40.0" prefWidth="100.0" text="ID" />
+                  <TextField />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="52.0">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="100.0" text="Name" />
+                  <TextField />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="152.0">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="100.0" text="Inv" />
+                  <TextField />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="252.0">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="100.0" text="Price/Cost" />
+                  <TextField />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="352.0">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="100.0" text="Min" />
+                  <TextField />
+                  <Label prefHeight="40.0" prefWidth="100.0" text="Max" />
+                  <TextField />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="52.0">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="100.0" text="Label" />
+                  <TextField />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="52.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#toMainMenu" text="Cancel" />
+                  <Button mnemonicParsing="false" text="Button" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

@@ -2,18 +2,25 @@ package sample.Controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import sample.Model.InHousePart;
 import sample.Model.Inventory;
 import sample.Model.Part;
 import sample.Model.Product;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -123,6 +130,15 @@ public class MainController implements Initializable {
 /*        allParts.add(new InHousePart(1,"10mm Bolt", 0.10, 567, 100, 2000, 54));
         System.out.println((Inventory.lookupPart(1)).getName());*/
 
+    }
+
+    public void toAddPartForm (ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/sample/View/addPartForm.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Add Part");
+        stage.setScene(scene);
+        stage.show();
     }
 
 

@@ -15,54 +15,55 @@
                         <Font name="System Bold Italic" size="12.0" />
                      </font>
                   </Label>
-                  <RadioButton mnemonicParsing="false" text="RadioButton" />
-                  <RadioButton mnemonicParsing="false" text="RadioButton" />
+                  <RadioButton fx:id="inhouseRadioButton" mnemonicParsing="false" text="In-House" />
+                  <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" text="Outsourced" />
                </children>
             </HBox>
             <HBox>
                <children>
                   <Label prefHeight="40.0" prefWidth="100.0" text="ID" />
-                  <TextField />
+                  <TextField fx:id="idTextField" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="52.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="100.0" text="Name" />
-                  <TextField />
+                  <TextField fx:id="nameTextField" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="152.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="100.0" text="Inv" />
-                  <TextField />
+                  <TextField fx:id="inventoryTextField" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="252.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="100.0" text="Price/Cost" />
-                  <TextField />
+                  <TextField fx:id="priceTextField" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="352.0">
                <children>
                   <Label prefHeight="40.0" prefWidth="100.0" text="Min" />
-                  <TextField />
+                  <TextField fx:id="minTextField" />
                   <Label prefHeight="40.0" prefWidth="100.0" text="Max" />
-                  <TextField />
+                  <TextField fx:id="maxTextField" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="52.0">
                <children>
-                  <Label prefHeight="40.0" prefWidth="100.0" text="Label" />
-                  <TextField />
+                  <Label fx:id="variableLabel" prefHeight="40.0" prefWidth="100.0" text="Label" />
+                  <TextField fx:id="variableTextField" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="52.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#toMainMenu" text="Cancel" />
-                  <Button mnemonicParsing="false" text="Button" />
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#toMainMenu" text="Cancel" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#generateNewPart" text="Save" />
                </children>
             </HBox>
+            <VBox fx:id="errorLog" prefHeight="200.0" prefWidth="100.0" />
          </children>
       </VBox>
    </children>

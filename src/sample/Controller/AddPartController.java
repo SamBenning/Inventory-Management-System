@@ -42,10 +42,8 @@ public class AddPartController implements Initializable {
     public void generateNewPart(ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         boolean hasException = false;
-        boolean noLogicalErrors = true;
         boolean isInHouse;
 
-        int id = -1;
         String name = "";
         int stock = -1;
         double price = -1;
@@ -54,7 +52,6 @@ public class AddPartController implements Initializable {
         int machineId = -1;
         String companyName = "";
 
-        id = fieldValidationUtil.parseId(idTextField, id, errorLog);
         System.out.println(hasException);
         name = fieldValidationUtil.parseName(nameTextField, name, errorLog);
         stock = parseStock(inventoryTextField, stock, errorLog);
@@ -91,15 +88,10 @@ public class AddPartController implements Initializable {
         if (!hasException) {
             Part newPart;
             if (isInHouse) {
-                newPart = new InHousePart(id, name, price, stock, min, max, machineId);
+                newPart = new InHousePart(name, price, stock, min, max, machineId);
             } else {
-                newPart = new OutsourcedPart(id,name,price,stock,min,max,companyName);
+                newPart = new OutsourcedPart(name,price,stock,min,max,companyName);
             }
-            /*System.out.println(newPart.getId());
-            System.out.println(newPart.getName());
-            System.out.println(newPart.getPrice());
-            Inventory.addPart((Part)newPart);*/
-            //Inventory.lookupPart(5).getName();
             try {
                 toMainMenu(actionEvent, newPart);
             } catch (IOException e) {
@@ -118,11 +110,6 @@ public class AddPartController implements Initializable {
 
     }
 
-    private void validateStringField(String text) throws BlankStringFieldException {
-        if (text.isBlank()) {
-            throw new BlankStringFieldException("Text fields must not be blank.");
-        }
-    }
     public void changePartSource(ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         variableTextField.clear();

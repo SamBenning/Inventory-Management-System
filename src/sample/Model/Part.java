@@ -1,6 +1,7 @@
 package sample.Model;
 
 import javafx.collections.ObservableList;
+import sample.Controller.UniqueID;
 
 public abstract class Part {
 
@@ -10,9 +11,17 @@ public abstract class Part {
     private int stock;
     private int min;
     private int max;
+    private boolean isInHouse;
 
-    public Part(int id, String name, double price, int stock, int min, int max) {
-        this.id = id;
+    public Part(String name, double price, int stock, int min, int max, boolean isInHouse) {
+
+        if (isInHouse) {
+            this.id = UniqueID.generatePartInHouseId();
+        } else {
+            this.id = UniqueID.generatePartOutsourcedId();
+        }
+
+
         this.name = name;
         this.price = price;
         this.stock = stock;

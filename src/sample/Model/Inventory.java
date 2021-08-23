@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /** The inventory object stores ObservableLists for all parts and products in the program and manipulating those lists*/
-public class Inventory {
+public final class Inventory {
     private static ObservableList<Part> allParts;
     private static ObservableList<Product> allProducts;
 

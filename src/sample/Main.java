@@ -11,7 +11,7 @@ import sample.Model.Part;
 import sample.Model.Product;
 
 public class Main extends Application {
-
+    Inventory inventory = new Inventory();
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("View/mainForm.fxml"));
@@ -22,19 +22,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-
-    /*    Inventory testInv = new Inventory();
-
-        InHousePart screw = new InHousePart(1, "screw", 0.55, 100, 25, 1000, 43);
-        System.out.println(((InHousePart)screw).getMachineId());
-
-        testInv.addPart(screw);
-
-        String name = testInv.lookupPart(1).getName();
-        int machineid = ((InHousePart)testInv.lookupPart(1)).getMachineId();
-        System.out.println(name);
-        System.out.println(machineid);
-*/
 
 
         launch(args);

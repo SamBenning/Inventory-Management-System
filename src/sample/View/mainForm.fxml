@@ -26,7 +26,7 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="addPartButton" mnemonicParsing="false" onAction="#toAddPartForm" text="Add" />
-                        <Button mnemonicParsing="false" text="Button" />
+                        <Button fx:id="modifyPartButton" mnemonicParsing="false" onAction="#toModifyPartForm" text="Modify" />
                         <Button mnemonicParsing="false" text="Button" />
                      </children>
                   </HBox>

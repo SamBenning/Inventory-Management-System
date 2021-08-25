@@ -119,6 +119,11 @@ public class MainController implements Initializable {
         Inventory.addPart(new InHousePart("Washer", 0.50, 38, 15, 1000, 2));
         System.out.println("Initialize ran.");
 
+        Part part = new InHousePart("test",1,1,1,1,1);
+        Inventory.addPart(part);
+        System.out.println(Inventory.getAllParts().indexOf(part));
+        System.out.println(part.getClass().getSimpleName());
+
         partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventoryCol.setCellValueFactory(new PropertyValueFactory<>("stock"));

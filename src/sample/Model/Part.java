@@ -15,6 +15,7 @@ public abstract class Part {
 
     public Part(String name, double price, int stock, int min, int max, boolean isInHouse) {
 
+        this.isInHouse = isInHouse;
         if (isInHouse) {
             this.id = UniqueID.generatePartInHouseId();
         } else {
@@ -84,5 +85,13 @@ public abstract class Part {
 
     public void setMax(int max) {
         this.max = max;
+    }
+
+    public boolean isInHouse() {
+        return isInHouse;
+    }
+
+    public void setInHouse(boolean inHouse) {
+        isInHouse = inHouse;
     }
 }

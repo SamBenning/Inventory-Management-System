@@ -9,6 +9,12 @@ public class InHousePart extends Part{
         this.machineId = machineId;
     }
 
+    public InHousePart() {
+        super();
+        super.setInHouse(true);
+        this.machineId = -1;
+    }
+
     public int getMachineId() {
         return machineId;
     }

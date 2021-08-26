@@ -50,7 +50,6 @@ public class ModifyPartController implements Initializable {
         errorLog.getChildren().clear();
         boolean hasException = false;
         boolean inHouseIsSelected;
-        boolean selectedPartIsInHouse = selectedPart.isInHouse();
 
         String name = "";
         int stock = -1;
@@ -75,18 +74,7 @@ public class ModifyPartController implements Initializable {
             inHouseIsSelected = false;
         }
 
-        if (stock < min) {
-            Label errorMessage = new Label("Inv cannot be less than Min.");
-            errorLog.getChildren().add(errorMessage);
-        }
-        if (stock > max) {
-            Label errorMessage = new Label("Inv cannot be greater tan Max.");
-            errorLog.getChildren().add(errorMessage);
-        }
-        if (min > max) {
-            Label errorMessage = new Label("Min cannot be greater than Max");
-            errorLog.getChildren().add(errorMessage);
-        }
+        fieldValidationUtil.validateLogic(stock, min, max, errorLog);
 
         if (!errorLog.getChildren().isEmpty()) {
             hasException = true;
@@ -96,18 +84,31 @@ public class ModifyPartController implements Initializable {
 
             int index = Inventory.getAllParts().indexOf(selectedPart);
             if (inHouseIsSelected) {
-                Part updatedPart = new InHousePart(name, price, stock, min, max, machineId);
-                Inventory.updatePart(index, selectedPart, updatedPart);
+                InHousePart updatedPart = new InHousePart();
+                updatedPart.setId(selectedPart.getId());
+                updatedPart.setName(name);
+                updatedPart.setStock(stock);
+                updatedPart.setPrice(price);
+                updatedPart.setMin(min);
+                updatedPart.setMax(max);
+                updatedPart.setMachineId(machineId);
+                Inventory.updatePart(index, updatedPart);
             } else {
-                Part updatedPart = new OutsourcedPart(name, price, stock, min, max, companyName);
-                Inventory.updatePart(index, selectedPart, updatedPart);
+                OutsourcedPart updatedPart = new OutsourcedPart();
+                updatedPart.setId(selectedPart.getId());
+                updatedPart.setName(name);
+                updatedPart.setStock(stock);
+                updatedPart.setPrice(price);
+                updatedPart.setMin(min);
+                updatedPart.setMax(max);
+                updatedPart.setCompanyName(companyName);
+                Inventory.updatePart(index, updatedPart);
             }
-        }
-
-        try {
-            toMainMenu(actionEvent);
-        } catch (IOException e) {
-            System.out.println("damn");
+            try {
+                toMainMenu(actionEvent);
+            } catch (IOException e) {
+                System.out.println("damn");
+            }
         }
     }
 

@@ -81,7 +81,6 @@ public class MainController implements Initializable {
 
     @FXML
     private void searchPartTableHandler (KeyEvent keyEvent) {
-        System.out.println("searchPartTableHandler called");
         String input = partSearch.getText();
 
         ObservableList<Part> parts = searchByPartName(input);
@@ -91,11 +90,17 @@ public class MainController implements Initializable {
 
     @FXML
     private void searchProductTableHandler (KeyEvent keyEvent) {
-        System.out.println("searchProductTablehandler called");
         String input = productSearch.getText();
 
         ObservableList<Product> products = searchByProductName(input);
         productsTable.setItems(products);
+
+    }
+
+    public void deletePartHandler (ActionEvent actionEvent) {
+        boolean deleteSuccessful;
+        deleteSuccessful = Inventory.deletePart((Part)partsTable.getSelectionModel().getSelectedItem());
+
 
     }
 
@@ -113,16 +118,6 @@ public class MainController implements Initializable {
         allProducts.add(new Product(allParts, 2, "Stereo", 50.75, 15, 1, 25));
         allProducts.add(new Product(allParts, 3, "Washing Machine", 75.00, 7, 1, 10));
         allProducts.add(new Product(allParts, 4, "Refrigerator", 150.99, 4, 1, 10));*/
-        Inventory.addPart(new InHousePart("10mm Bolt", 0.10, 567, 100, 2000, 54));
-        Inventory.addPart(new InHousePart("15mm Bolt", 0.15, 204, 100, 2000, 54));
-        Inventory.addPart(new InHousePart("Spring", 0.05, 749, 150, 5000, 7));
-        Inventory.addPart(new InHousePart("Washer", 0.50, 38, 15, 1000, 2));
-        System.out.println("Initialize ran.");
-
-        Part part = new InHousePart("test",1,1,1,1,1);
-        Inventory.addPart(part);
-        System.out.println(Inventory.getAllParts().indexOf(part));
-        System.out.println(part.getClass().getSimpleName());
 
         partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));

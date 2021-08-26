@@ -12,12 +12,17 @@ import sample.Model.Product;
 
 public class Main extends Application {
     Inventory inventory = new Inventory();
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("View/mainForm.fxml"));
         primaryStage.setTitle("Main Form");
         primaryStage.setScene(new Scene(root, 900, 600));
         primaryStage.show();
+        Inventory.addPart(new InHousePart("10mm Bolt", 0.10, 567, 100, 2000, 54));
+        Inventory.addPart(new InHousePart("15mm Bolt", 0.15, 204, 100, 2000, 54));
+        Inventory.addPart(new InHousePart("Spring", 0.05, 749, 150, 5000, 7));
+        Inventory.addPart(new InHousePart("Washer", 0.50, 38, 15, 1000, 2));
     }
 
 

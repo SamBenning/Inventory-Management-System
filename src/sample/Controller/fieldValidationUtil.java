@@ -103,6 +103,21 @@ public final class fieldValidationUtil {
         }
     }
 
+    public static void validateLogic(int stock, int min, int max, VBox errorLog) {
+        if (stock < min) {
+            Label errorMessage = new Label("Inv cannot be less than Min.");
+            errorLog.getChildren().add(errorMessage);
+        }
+        if (stock > max) {
+            Label errorMessage = new Label("Inv cannot be greater tan Max.");
+            errorLog.getChildren().add(errorMessage);
+        }
+        if (min > max) {
+            Label errorMessage = new Label("Min cannot be greater than Max");
+            errorLog.getChildren().add(errorMessage);
+        }
+    }
+
 
     private static void validateStringField(String text) throws BlankStringFieldException {
         if (text.isBlank()) {

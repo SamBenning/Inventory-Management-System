@@ -13,21 +13,21 @@ public class UniqueID {
 
     public static int generatePartInHouseId() {
         int id;
-        String idString = partPrefixInHouse + Integer.toString(++partInHouseCount);
+        String idString = partPrefixInHouse + (++partInHouseCount);
         id = Integer.parseInt(idString);
         return id;
     }
 
     public static int generatePartOutsourcedId() {
         int id;
-        String idString = partPrefixOutsourced + Integer.toString(++partOutsourcedCount);
+        String idString = partPrefixOutsourced + (++partOutsourcedCount);
         id = Integer.parseInt(idString);
         return id;
     }
 
     public static int generateProductId() {
         int id;
-        String idString = productPrefix + Integer.toString(++productCount);
+        String idString = productPrefix + (++productCount);
         id = Integer.parseInt(idString);
         return id;
     }

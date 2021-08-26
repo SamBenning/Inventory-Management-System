@@ -85,9 +85,10 @@ public final class Inventory {
         return observableMatchingProducts;
     }
 
-    public static void updatePart (int index, Part selectedPart, Part updatedPart) {
+    public static void updatePart (int index, Part updatedPart) {
 
-        if(updatedPart.getClass().getSimpleName().equals("InHousePart")) {
+        allParts.set(index, updatedPart);
+        /*if(updatedPart.getClass().getSimpleName().equals("InHousePart")) {
             InHousePart part = new InHousePart();
             part.setId(selectedPart.getId());
             part.setName(updatedPart.getName());
@@ -108,7 +109,7 @@ public final class Inventory {
             part.setCompanyName(((OutsourcedPart)updatedPart).getCompanyName());
             allParts.set(index, part);
         }
-        System.out.println("Updated part to class " + updatedPart.getClass().getSimpleName());
+        System.out.println("Updated part to class " + updatedPart.getClass().getSimpleName());*/
     }
 
     public static void updateProduct(int index, Product newProduct) {
@@ -116,7 +117,13 @@ public final class Inventory {
     }
 
     public static boolean deletePart(Part selectedPart) {
-        return true;
+        try {
+            allParts.remove(selectedPart);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error deleting part " + e);
+            return false;
+        }
     }
 
     public static boolean deleteProduct(Product selectedProduct) {

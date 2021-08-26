@@ -38,12 +38,18 @@ public class AddPartController implements Initializable {
     public Label variableLabel;
     public TextField variableTextField;
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        group.selectToggle(inhouseRadioButton);
+        setVariableField();
+
+    }
+    
     public void generateNewPart(ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         boolean hasException = false;
         boolean isInHouse;
-
         String name = "";
         int stock = -1;
         double price = -1;
@@ -52,13 +58,11 @@ public class AddPartController implements Initializable {
         int machineId = -1;
         String companyName = "";
 
-        System.out.println(hasException);
         name = fieldValidationUtil.parseName(nameTextField, name, errorLog);
         stock = parseStock(inventoryTextField, stock, errorLog);
         price = parsePrice(priceTextField, price, errorLog);
         min = parseMin(minTextField, min, errorLog);
         max = parseMax(maxTextField, max, errorLog);
-
 
         if (group.getSelectedToggle() == inhouseRadioButton) {
             machineId = fieldValidationUtil.parseMachineId(variableTextField, machineId, errorLog);
@@ -68,18 +72,7 @@ public class AddPartController implements Initializable {
             isInHouse = false;
         }
 
-        if (stock < min) {
-            Label errorMessage = new Label("Inv cannot be less than Min.");
-            errorLog.getChildren().add(errorMessage);
-        }
-        if (stock > max) {
-            Label errorMessage = new Label("Inv cannot be greater tan Max.");
-            errorLog.getChildren().add(errorMessage);
-        }
-        if (min > max) {
-            Label errorMessage = new Label("Min cannot be greater than Max");
-            errorLog.getChildren().add(errorMessage);
-        }
+        fieldValidationUtil.validateLogic(stock, min, max, errorLog);
 
         if (!errorLog.getChildren().isEmpty()) {
             hasException = true;
@@ -97,18 +90,11 @@ public class AddPartController implements Initializable {
             } catch (IOException e) {
                 System.out.println("damn");
             }
-
         }
     }
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        group.selectToggle(inhouseRadioButton);
-        setVariableField();
-
-    }
+    
 
     public void changePartSource(ActionEvent actionEvent) {
         errorLog.getChildren().clear();

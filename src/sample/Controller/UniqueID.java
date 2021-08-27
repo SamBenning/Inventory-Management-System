@@ -5,11 +5,15 @@ public class UniqueID {
     private static String partPrefixInHouse = "10";
     private static String partPrefixOutsourced = "20";
     private static String productPrefix = "30";
+    private static int partCount = 0;
     private static int partInHouseCount = 0;
     private static int partOutsourcedCount = 0;
     private static int productCount = 0;
 
 
+    public static int generatePartId() {
+        return ++partCount;
+    }
 
     public static int generatePartInHouseId() {
         int id;
@@ -26,10 +30,7 @@ public class UniqueID {
     }
 
     public static int generateProductId() {
-        int id;
-        String idString = productPrefix + (++productCount);
-        id = Integer.parseInt(idString);
-        return id;
+        return ++productCount;
     }
 
 }

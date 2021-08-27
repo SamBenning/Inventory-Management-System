@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AddPartController">
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.AddPartController">
    <children>
       <VBox>
          <children>
@@ -27,7 +27,7 @@
                   </fx:define>
                   <HBox alignment="CENTER" prefWidth="200.0">
                      <children>
-                        <RadioButton fx:id="inhouseRadioButton" mnemonicParsing="false" onAction="#changePartSource" text="In-House">
+                        <RadioButton fx:id="inhouseRadioButton" mnemonicParsing="false" onAction="#changePartSourceHandler" text="In-House">
                            <toggleGroup>
                               <ToggleGroup fx:id="group" />
                            </toggleGroup>
@@ -35,7 +35,7 @@
                               <Insets right="10.0" />
                            </HBox.margin>
                         </RadioButton>
-                        <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#changePartSource" text="Outsourced" toggleGroup="$group" />
+                        <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#changePartSourceHandler" text="Outsourced" toggleGroup="$group" />
                      </children>
                   </HBox>
                </children>
@@ -119,7 +119,7 @@
             </HBox>
             <HBox layoutX="10.0" layoutY="52.0">
                <children>
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#generateNewPart" text="Save">
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#generateNewPartHandler" text="Save">
                      <HBox.margin>
                         <Insets right="6.0" />
                      </HBox.margin></Button>

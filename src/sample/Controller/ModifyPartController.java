@@ -39,18 +39,34 @@ public class ModifyPartController implements Initializable {
     public ToggleGroup group;
     public Label variableLabel;
     public TextField variableTextField;
-
     private Part selectedPart;
 
+    //This constructor is used to pass the selected Part object from MainController
     public ModifyPartController(Part selectedPart) {
         this.selectedPart = selectedPart;
     }
 
-    public void modifyPart(ActionEvent actionEvent) {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        idTextField.setText(Integer.toString(selectedPart.getId()));
+        nameTextField.setText(selectedPart.getName());
+        inventoryTextField.setText(Integer.toString(selectedPart.getStock()));
+        priceTextField.setText(Double.toString(selectedPart.getPrice()));
+        minTextField.setText(Integer.toString(selectedPart.getMin()));
+        maxTextField.setText(Integer.toString(selectedPart.getMax()));
+        setInitialVariableField();
+        setInitialToggle();
+    }
+
+
+    //Validates entries in text fields. If not valid, prints error messages to error log.
+    //If valid, generates a new Part object of appropriate subclass using entered field values and the ID
+    //value from the selectedPart passed in from MainController.
+    public void modifyPartHandler(ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         boolean hasException = false;
         boolean inHouseIsSelected;
-
+        //Variable initialization to be used for Part generation.
         String name = "";
         int stock = -1;
         double price = -1;
@@ -58,14 +74,15 @@ public class ModifyPartController implements Initializable {
         int max = -1;
         int machineId = -1;
         String companyName = "";
-
+        //Parse & validate field entries and assign them to appropriate variable.
+        //The parse functions print to errorLog if no value is entered.
         name = fieldValidationUtil.parseName(nameTextField, name, errorLog);
-        stock = parseStock(inventoryTextField, stock, errorLog);
-        price = parsePrice(priceTextField, price, errorLog);
-        min = parseMin(minTextField, min, errorLog);
-        max = parseMax(maxTextField, max, errorLog);
+        stock = fieldValidationUtil.parseStock(inventoryTextField, stock, errorLog);
+        price = fieldValidationUtil.parsePrice(priceTextField, price, errorLog);
+        min = fieldValidationUtil.parseMin(minTextField, min, errorLog);
+        max = fieldValidationUtil.parseMax(maxTextField, max, errorLog);
 
-
+        //Call appropriate parse function depending on selected radio button.
         if (group.getSelectedToggle() == inhouseRadioButton) {
             machineId = fieldValidationUtil.parseMachineId(variableTextField, machineId, errorLog);
             inHouseIsSelected = true;
@@ -73,15 +90,17 @@ public class ModifyPartController implements Initializable {
             companyName = fieldValidationUtil.parseCompanyName(variableTextField, companyName, errorLog);
             inHouseIsSelected = false;
         }
-
+        //validateLogic verifies that Integer field values make sense. Prints to errorLog if
+        //problem found
         fieldValidationUtil.validateLogic(stock, min, max, errorLog);
-
+        //Determine whether any exceptions have been found by checking whether errorLog is empty.
         if (!errorLog.getChildren().isEmpty()) {
             hasException = true;
         }
 
         if (!hasException) {
-
+            /*generate new part using default constructor and set all member variables using setters to avoid
+            * incrementing static count variable in UniqueID class.*/
             int index = Inventory.getAllParts().indexOf(selectedPart);
             if (inHouseIsSelected) {
                 InHousePart updatedPart = new InHousePart();
@@ -112,11 +131,17 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    public void changePartSourceHandler(ActionEvent actionEvent) {
+        errorLog.getChildren().clear();
+        variableTextField.clear();
+        setVariableField();
+    }
+
     public void setSelectedPart(Part selectedPart) {
-        System.out.println("setSelectedPart called.");
         this.selectedPart = selectedPart;
     }
-    //Checks whether selected part is inhouse or outsourced based on inInHouse member varaible of Part abstract class
+
+    //Checks whether selected part is inhouse or outsourced based on inInHouse member variable of Part abstract class
     //and sets the variable text field accordingly.
     public void setInitialVariableField() {
         if(selectedPart.isInHouse()) {
@@ -154,24 +179,7 @@ public class ModifyPartController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        //System.out.println("mod part init ran");
-        idTextField.setText(Integer.toString(selectedPart.getId()));
-        nameTextField.setText(selectedPart.getName());
-        inventoryTextField.setText(Integer.toString(selectedPart.getStock()));
-        priceTextField.setText(Double.toString(selectedPart.getPrice()));
-        minTextField.setText(Integer.toString(selectedPart.getMin()));
-        maxTextField.setText(Integer.toString(selectedPart.getMax()));
-        setInitialVariableField();
-        setInitialToggle();
-    }
 
-    public void changePartSource(ActionEvent actionEvent) {
-        errorLog.getChildren().clear();
-        variableTextField.clear();
-        setVariableField();
-    }
 
     public void generateNewPart () {
         System.out.println(selectedPart.getName());

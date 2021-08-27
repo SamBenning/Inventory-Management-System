@@ -21,7 +21,7 @@
                         </fx:define>
                         <HBox alignment="CENTER" prefWidth="200.0">
                             <children>
-                                <RadioButton fx:id="inhouseRadioButton" mnemonicParsing="false" onAction="#changePartSource" text="IN-House">
+                                <RadioButton fx:id="inhouseRadioButton" mnemonicParsing="false" onAction="#changePartSourceHandler" text="IN-House">
                                     <toggleGroup>
                                         <ToggleGroup fx:id="group" />
                                     </toggleGroup>
@@ -29,7 +29,7 @@
                                         <Insets right="10.0" />
                                     </HBox.margin>
                                 </RadioButton>
-                                <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#changePartSource" text="Outsourced" toggleGroup="$group" />
+                                <RadioButton fx:id="outsourcedRadioButton" mnemonicParsing="false" onAction="#changePartSourceHandler" text="Outsourced" toggleGroup="$group" />
                             </children>
                         </HBox>
                     </children>
@@ -113,7 +113,7 @@
                 </HBox>
                 <HBox layoutX="10.0" layoutY="52.0">
                     <children>
-                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#modifyPart" text="Save">
+                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#modifyPartHandler" text="Save">
                             <HBox.margin>
                                 <Insets right="6.0" />
                             </HBox.margin></Button>

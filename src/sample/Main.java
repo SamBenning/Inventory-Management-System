@@ -23,6 +23,10 @@ public class Main extends Application {
         Inventory.addPart(new InHousePart("15mm Bolt", 0.15, 204, 100, 2000, 54));
         Inventory.addPart(new InHousePart("Spring", 0.05, 749, 150, 5000, 7));
         Inventory.addPart(new InHousePart("Washer", 0.50, 38, 15, 1000, 2));
+        Inventory.addProduct(new Product(Inventory.getAllParts(), "TV", 100.4, 4,1,10));
+        Inventory.addProduct(new Product(Inventory.getAllParts(), "Stereo", 50.75, 15, 1, 25));
+        Inventory.addProduct(new Product(Inventory.getAllParts(), "Washing Machine", 75.00, 7, 1, 10));
+        Inventory.addProduct(new Product(Inventory.getAllParts(), "Refrigerator", 150.99, 4, 1, 10));
     }
 
 

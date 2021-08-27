@@ -24,7 +24,6 @@ import static sample.Controller.fieldValidationUtil.*;
 public class AddPartController implements Initializable {
 
     public TableView partsTable;
-    public TableView productsTable;
     public RadioButton inhouseRadioButton;
     public RadioButton outsourcedRadioButton;
     public VBox errorLog;
@@ -40,13 +39,11 @@ public class AddPartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         group.selectToggle(inhouseRadioButton);
         setVariableField();
-
     }
     
-    public void generateNewPart(ActionEvent actionEvent) {
+    public void generateNewPartHandler(ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         boolean hasException = false;
         boolean isInHouse;
@@ -93,52 +90,39 @@ public class AddPartController implements Initializable {
         }
     }
 
-
-    
-
-    public void changePartSource(ActionEvent actionEvent) {
+    public void changePartSourceHandler(ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         variableTextField.clear();
         setVariableField();
     }
 
     public void setVariableField() {
-
         if (group.getSelectedToggle() == inhouseRadioButton) {
             variableLabel.setText("Machine ID");
         } else {
             variableLabel.setText("Company Name");
         }
-
     }
 
     public void toMainMenu(ActionEvent actionEvent) throws IOException {
-        //Parent root = FXMLLoader.load(getClass().getResource("/sample/View/mainForm.fxml"));
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/mainForm.fxml"));
         Parent root = loader.load();
-
-
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 850, 600);
         stage.setTitle("Main Form");
         stage.setScene(scene);
         stage.show();
     }
-    public void toMainMenu(ActionEvent actionEvent, Part part) throws IOException {
-        //Parent root = FXMLLoader.load(getClass().getResource("/sample/View/mainForm.fxml"));
 
+    public void toMainMenu(ActionEvent actionEvent, Part part) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/mainForm.fxml"));
         Parent root = loader.load();
-
         MainController mc = loader.getController();
         mc.addPartFromForm(part);
-
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 850, 600);
         stage.setTitle("Main Form");
         stage.setScene(scene);
         stage.show();
     }
-
 }

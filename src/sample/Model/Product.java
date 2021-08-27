@@ -2,6 +2,7 @@ package sample.Model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Controller.UniqueID;
 import sample.Model.Part;
 
 public class Product {
@@ -14,14 +15,18 @@ public class Product {
     private int min;
     private int max;
 
-    public Product(ObservableList<Part> associatedParts, int id, String name, double price, int stock, int min, int max) {
+    public Product(ObservableList<Part> associatedParts, String name, double price, int stock, int min, int max) {
         this.associatedParts = FXCollections.observableArrayList();
-        this.id = id;
+        this.id = UniqueID.generateProductId();
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.min = min;
         this.max = max;
+    }
+
+    public Product() {
+        this.associatedParts = FXCollections.observableArrayList();
     }
 
     public void addAssociatedPart (Part part) {

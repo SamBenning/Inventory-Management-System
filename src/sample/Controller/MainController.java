@@ -100,11 +100,7 @@ public class MainController implements Initializable {
     public void deletePartHandler (ActionEvent actionEvent) {
         boolean deleteSuccessful;
         deleteSuccessful = Inventory.deletePart((Part)partsTable.getSelectionModel().getSelectedItem());
-
-
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -114,10 +110,7 @@ public class MainController implements Initializable {
         partsTable.setItems(allParts);
         productsTable.setItems(allProducts);
 
-/*        allProducts.add(new Product(allParts,1, "TV", 100.4, 4,1,10));
-        allProducts.add(new Product(allParts, 2, "Stereo", 50.75, 15, 1, 25));
-        allProducts.add(new Product(allParts, 3, "Washing Machine", 75.00, 7, 1, 10));
-        allProducts.add(new Product(allParts, 4, "Refrigerator", 150.99, 4, 1, 10));*/
+
 
         partIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -137,7 +130,10 @@ public class MainController implements Initializable {
 
     public void addPartFromForm(Part part) {
         allParts.add(part);
-        //partsTable.setItems(allParts);
+    }
+
+    public void addProductFromForm(Product product) {
+        allProducts.add(product);
     }
 
 
@@ -151,27 +147,38 @@ public class MainController implements Initializable {
     }
 
     public void toModifyPartForm (ActionEvent actionEvent) throws IOException {
+        try {
+            Part part = (Part) partsTable.getSelectionModel().getSelectedItem();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/modifyPartForm.fxml"));
 
-        Part part = (Part)partsTable.getSelectionModel().getSelectedItem();
-        System.out.println(part.getName());
+            //Creates new controller so that constructor can be called to pass in selected part
+            ModifyPartController modifyPartController = new ModifyPartController(part);
+            //Sets the controller since fx:controller cannot be defined in modifyPartForm.fxml w/ this method.
+            loader.setController(modifyPartController);
+            Parent root = loader.load();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/modifyPartForm.fxml"));
+            //modifyPartController.setSelectedPart(part);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 800, 600);
+            stage.setTitle("Modify Part");
+            stage.setScene(scene);
+            stage.show();
+        } catch(Exception e) {
+            System.out.println("Error loading ModifyPart form. Did you select a part?");
+            System.out.println(e);
+        }
+    }
 
-        //Creates new controller so that constructor can be called to pass in selected part
-        ModifyPartController modifyPartController = new ModifyPartController(part);
-        //Sets the controller since fx:controller cannot be defined in modifyPartForm.fxml w/ this method.
-        loader.setController(modifyPartController);
+    public void toAddProductForm (ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/addProductForm.fxml"));
         Parent root = loader.load();
 
-
-        //modifyPartController.setSelectedPart(part);
-
-
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("Modify Part");
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene (root, 1100, 600);
+        stage.setTitle("Add Product");
         stage.setScene(scene);
         stage.show();
+
     }
 
 

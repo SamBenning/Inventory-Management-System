@@ -17,7 +17,7 @@ public abstract class Part {
 
         this.isInHouse = isInHouse;
         if (isInHouse) {
-            this.id = UniqueID.generatePartInHouseId();
+            this.id = UniqueID.generatePartId();
         } else {
             this.id = UniqueID.generatePartOutsourcedId();
         }

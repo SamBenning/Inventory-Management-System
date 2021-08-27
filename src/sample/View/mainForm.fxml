@@ -50,8 +50,8 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#toAddProductForm" text="Add" />
-                        <Button mnemonicParsing="false" text="Button" />
-                        <Button mnemonicParsing="false" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#toModifyProductForm" text="Modify" />
+                        <Button mnemonicParsing="false" onAction="#deleteProductHandler" text="Delete" />
                      </children>
                   </HBox>
                </children>

@@ -17,6 +17,7 @@ public class Product {
 
     public Product(ObservableList<Part> associatedParts, String name, double price, int stock, int min, int max) {
         this.associatedParts = FXCollections.observableArrayList();
+        //this.associatedParts = associatedParts;
         this.id = UniqueID.generateProductId();
         this.name = name;
         this.price = price;

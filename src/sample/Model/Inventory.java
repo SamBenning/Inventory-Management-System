@@ -86,34 +86,11 @@ public final class Inventory {
     }
 
     public static void updatePart (int index, Part updatedPart) {
-
         allParts.set(index, updatedPart);
-        /*if(updatedPart.getClass().getSimpleName().equals("InHousePart")) {
-            InHousePart part = new InHousePart();
-            part.setId(selectedPart.getId());
-            part.setName(updatedPart.getName());
-            part.setStock(updatedPart.getStock());
-            part.setPrice(updatedPart.getPrice());
-            part.setMin(updatedPart.getMin());
-            part.setMax(updatedPart.getMax());
-            part.setMachineId(((InHousePart)updatedPart).getMachineId());
-            allParts.set(index, part);
-        } else if (updatedPart.getClass().getSimpleName().equals("OutsourcedPart")) {
-            OutsourcedPart part = new OutsourcedPart();
-            part.setId(selectedPart.getId());
-            part.setName(updatedPart.getName());
-            part.setStock(updatedPart.getStock());
-            part.setPrice(updatedPart.getPrice());
-            part.setMin(updatedPart.getMin());
-            part.setMax(updatedPart.getMax());
-            part.setCompanyName(((OutsourcedPart)updatedPart).getCompanyName());
-            allParts.set(index, part);
-        }
-        System.out.println("Updated part to class " + updatedPart.getClass().getSimpleName());*/
     }
 
-    public static void updateProduct(int index, Product newProduct) {
-
+    public static void updateProduct(int index, Product updatedProduct) {
+        allProducts.set(index, updatedProduct);
     }
 
     public static boolean deletePart(Part selectedPart) {
@@ -127,7 +104,13 @@ public final class Inventory {
     }
 
     public static boolean deleteProduct(Product selectedProduct) {
-        return true;
+        try {
+            allProducts.remove(selectedProduct);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error deleting product. " + e);
+            return false;
+        }
     }
 
     public static ObservableList<Part> getAllParts () {

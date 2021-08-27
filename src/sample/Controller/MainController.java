@@ -102,6 +102,22 @@ public class MainController implements Initializable {
         deleteSuccessful = Inventory.deletePart((Part)partsTable.getSelectionModel().getSelectedItem());
     }
 
+    private void checkAssociatedParts(Product product) throws AssociatedPartsException {
+        if(!product.getAllAssociatedParts().isEmpty()) {
+            throw new AssociatedPartsException("Product with associated parts cannot be deleted.");
+        }
+    }
+
+    public void deleteProductHandler (ActionEvent actionEvent){
+        try {
+            Product selectedProduct = (Product)productsTable.getSelectionModel().getSelectedItem();
+            checkAssociatedParts(selectedProduct);
+            Inventory.deleteProduct(selectedProduct);
+        } catch (AssociatedPartsException e) {
+            System.out.println("Cannot delete item with associated parts.");
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -179,6 +195,22 @@ public class MainController implements Initializable {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public void toModifyProductForm (ActionEvent actionEvent) throws IOException {
+        Product product = (Product) productsTable.getSelectionModel().getSelectedItem();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/modifyProductForm.fxml"));
+
+
+        ModifyProductController modifyProductController = new ModifyProductController(product);
+        loader.setController(modifyProductController);
+
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene (root, 1100, 600);
+        stage.setTitle("Modify Product");
+        stage.setScene(scene);
+        stage.show();
     }
 
 

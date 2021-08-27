@@ -1,14 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.View.ModifyProductForm"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox>
+            <children>
+                <VBox prefHeight="600.0" prefWidth="600.0">
+                    <children>
+                        <HBox>
+                            <children>
+                                <Label alignment="CENTER" prefHeight="50.0" text="MODIFY PRODUCT">
+                                    <font>
+                                        <Font name="System Bold" size="18.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox>
+                            <children>
+                                <Label alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="100.0" text="ID">
+                                    <padding>
+                                        <Insets right="15.0" />
+                                    </padding>
+                                </Label>
+                                <TextField fx:id="idTextField" editable="false" text="DISABLED - AUTO GEN">
+                                    <font>
+                                        <Font name="System Bold Italic" size="12.0" />
+                                    </font>
+                                </TextField>
+                            </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="52.0">
+                            <children>
+                                <Label alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="100.0" text="Name">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets right="15.0" />
+                                    </padding>
+                                </Label>
+                                <TextField fx:id="nameTextField" />
+                            </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="152.0">
+                            <children>
+                                <Label alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="100.0" text="Inv">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets right="15.0" />
+                                    </padding>
+                                </Label>
+                                <TextField fx:id="inventoryTextField" />
+                            </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="252.0">
+                            <children>
+                                <Label alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="100.0" text="Price/Cost">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets right="15.0" />
+                                    </padding>
+                                </Label>
+                                <TextField fx:id="priceTextField" />
+                            </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="352.0">
+                            <children>
+                                <Label alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="100.0" text="Min">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets right="15.0" />
+                                    </padding>
+                                </Label>
+                                <TextField fx:id="minTextField" />
+                                <Label alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="100.0" text="Max">
+                                    <padding>
+                                        <Insets right="15.0" />
+                                    </padding>
+                                </Label>
+                                <TextField fx:id="maxTextField" />
+                            </children>
+                        </HBox>
+                        <VBox fx:id="errorLog" prefHeight="200.0" prefWidth="100.0" />
+                    </children>
+                </VBox>
+                <VBox prefHeight="600.0" prefWidth="500.0">
+                    <children>
+                        <TextField />
+                        <TableView fx:id="partsTableAll" prefHeight="200.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn fx:id="partIdColAll" prefWidth="65.0" text="Part ID" />
+                                <TableColumn fx:id="partNameColAll" prefWidth="115.0" text="PartName" />
+                                <TableColumn fx:id="partInventoryColAll" prefWidth="115.0" text="Inventory Level" />
+                                <TableColumn fx:id="partUnitCostColAll" prefWidth="115.0" text="Price/ Cost per Unit" />
+                            </columns>
+                        </TableView>
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#addSelectedPartHandler" text="Add" />
+                        <TableView fx:id="partsTableAssoc" prefHeight="200.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn fx:id="partIdColAssoc" prefWidth="65.0" text="Part ID" />
+                                <TableColumn fx:id="partNameColAssoc" prefWidth="115.0" text="PartName" />
+                                <TableColumn fx:id="partInventoryColAssoc" prefWidth="115.0" text="Inventory Level" />
+                                <TableColumn fx:id="partUnitCostColAssoc" prefWidth="115.0" text="Price/ Cost per Unit" />
+                            </columns>
+                        </TableView>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#removeAssocPartHandler" text="Remove Associated Part" />
+                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Button fx:id="saveButton" mnemonicParsing="false" onAction="#modifyProductHandler" text="Save" />
+                                        <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#toMainMenu" text="Cancel" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
 </AnchorPane>

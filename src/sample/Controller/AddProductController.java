@@ -107,6 +107,14 @@ public class AddProductController implements Initializable {
         }
     }
 
+    public void removeAssocPartHandler(ActionEvent actionEvent) {
+        try {
+            newProduct.deleteAssociatedPart((Part)partsTableAssoc.getSelectionModel().getSelectedItem());
+        } catch (Exception e) {
+            System.out.println("Problem removing associated part.");
+        }
+    }
+
     public void toMainMenu(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/mainForm.fxml"));
         Parent root = loader.load();

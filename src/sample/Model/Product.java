@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 import sample.Controller.UniqueID;
 import sample.Model.Part;
 
+/**
+ * Class for products.*/
 public class Product {
 
     private ObservableList<Part> associatedParts;
@@ -30,10 +32,19 @@ public class Product {
         this.associatedParts = FXCollections.observableArrayList();
     }
 
+    /**
+     * Adds a part to the associatedParts ObservableList
+     * @param part The Part object to be added to associatedParts
+     * */
     public void addAssociatedPart (Part part) {
         associatedParts.add(part);
     }
 
+    /**
+     * Removes a part from the associatedParts ObservableList
+     * @param selectedAssociatedPart The Part object to be removed from associatedParts
+     * @return Returns true if deletion successful, false if not.
+     * */
     public boolean deleteAssociatedPart(Part selectedAssociatedPart) {
         boolean partRemoved = associatedParts.remove(selectedAssociatedPart);
         if(partRemoved) {

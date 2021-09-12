@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller.MainController">
    <children>
-      <Label text="Inventory Management System" />
+      <Label text="INVENTORY MANAGEMENT SYSTEM">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <padding>
+            <Insets bottom="15.0" />
+         </padding></Label>
       <HBox>
          <children>
             <VBox>
@@ -23,13 +36,21 @@
                         <TableColumn fx:id="partInventoryCol" prefWidth="115.0" text="Inventory Level" />
                         <TableColumn fx:id="partUnitCostCol" prefWidth="115.0" text="Price/ Cost per Unit" />
                      </columns></TableView>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <VBox>
                      <children>
-                        <Button fx:id="addPartButton" mnemonicParsing="false" onAction="#toAddPartForm" text="Add" />
-                        <Button fx:id="modifyPartButton" mnemonicParsing="false" onAction="#toModifyPartForm" text="Modify" />
-                        <Button fx:id="deletePartButton" mnemonicParsing="false" onAction="#deletePartHandler" text="Delete" />
+                        <HBox>
+                           <children>
+                              <Button fx:id="addPartButton" mnemonicParsing="false" onAction="#toAddPartForm" text="Add" />
+                              <Button fx:id="modifyPartButton" mnemonicParsing="false" onAction="#toModifyPartForm" text="Modify" />
+                              <Button fx:id="deletePartButton" mnemonicParsing="false" onAction="#deletePartHandler" text="Delete" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" />
+                           </padding>
+                        </HBox>
+                        <Label fx:id="partDeletionLabel" text="IF YOU SEE THIS SOMETHING WENT WRONG!" textFill="RED" />
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
             </VBox>
             <VBox>
@@ -47,17 +68,28 @@
                         <TableColumn fx:id="productInventoryCol" prefWidth="115.0" text="Inventory Level" />
                         <TableColumn fx:id="productUnitCostCol" prefWidth="115.0" text="Price/ Cost per Unit" />
                      </columns></TableView>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
+                  <VBox>
                      <children>
-                        <Button mnemonicParsing="false" onAction="#toAddProductForm" text="Add" />
-                        <Button mnemonicParsing="false" onAction="#toModifyProductForm" text="Modify" />
-                        <Button mnemonicParsing="false" onAction="#deleteProductHandler" text="Delete" />
+                        <HBox>
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#toAddProductForm" text="Add" />
+                              <Button mnemonicParsing="false" onAction="#toModifyProductForm" text="Modify" />
+                              <Button mnemonicParsing="false" onAction="#deleteProductHandler" text="Delete" />
+                           </children>
+                           <padding>
+                              <Insets bottom="15.0" />
+                           </padding>
+                        </HBox>
+                        <Label fx:id="productDeletionLabel" text="IF YOU SEE THIS SOMETHING WENT WRONG!" textFill="RED" />
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
             </VBox>
          </children>
       </HBox>
-      <Button mnemonicParsing="false" text="Button" />
+      <Button fx:id="exitAppButton" mnemonicParsing="false" onAction="#exitAppButtonHandler" style="-fx-background-color: #eb5834;" text="EXIT">
+         <VBox.margin>
+            <Insets bottom="30.0" top="10.0" />
+         </VBox.margin></Button>
    </children>
 </VBox>

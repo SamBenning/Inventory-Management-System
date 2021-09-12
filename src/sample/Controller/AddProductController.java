@@ -6,9 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,9 +18,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static sample.Controller.fieldValidationUtil.*;
-import static sample.Controller.fieldValidationUtil.parseMax;
-
+/**
+ * Controller for addProductForm
+ * <br>
+ * FUTURE ENHANCEMENT: Allow user to add/modify parts directly from the product
+ * screen.*/
 public class AddProductController implements Initializable {
     public VBox errorLog;
     public TextField idTextField;
@@ -44,6 +44,8 @@ public class AddProductController implements Initializable {
 
     private Product newProduct;
 
+    /**
+     * Sets cell value factories for both Table Views. Initializes newProduct object.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partIdColAll.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -60,6 +62,13 @@ public class AddProductController implements Initializable {
         partsTableAssoc.setItems(newProduct.getAllAssociatedParts());
     }
 
+    /**
+     * Grabs and validates user-input data from text fields, and any associated parts added,
+     * and generates new Product object to pass into Inventory.addProduct().
+     * @param actionEvent Save button clicked.
+     * <br>
+     * FUTURE ENHANCEMENT: Validate that stock, min, and max are non-negative. Validate
+     * string length, and check for matches in previous entries.*/
     public void generateNewProductHandler (ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         boolean hasException = false;
@@ -70,13 +79,13 @@ public class AddProductController implements Initializable {
         int min = -1;
         int max = -1;
 
-        name = fieldValidationUtil.parseName(nameTextField, name, errorLog);
-        stock = fieldValidationUtil.parseStock(inventoryTextField, stock, errorLog);
-        price = fieldValidationUtil.parsePrice(priceTextField, price, errorLog);
-        min = fieldValidationUtil.parseMin(minTextField, min, errorLog);
-        max = fieldValidationUtil.parseMax(maxTextField, max, errorLog);
+        name = FieldValidationUtil.parseName(nameTextField, errorLog);
+        stock = FieldValidationUtil.parseStock(inventoryTextField, errorLog);
+        price = FieldValidationUtil.parsePrice(priceTextField, errorLog);
+        min = FieldValidationUtil.parseMin(minTextField, errorLog);
+        max = FieldValidationUtil.parseMax(maxTextField, errorLog);
 
-        fieldValidationUtil.validateLogic(stock, min, max, errorLog);
+        FieldValidationUtil.validateLogic(stock, min, max, errorLog);
 
         if (!errorLog.getChildren().isEmpty()) {
             hasException = true;
@@ -84,19 +93,28 @@ public class AddProductController implements Initializable {
 
         if (!hasException) {
             newProduct.setId(UniqueID.generateProductId());
-            newProduct.setName(nameTextField.getText());
-            newProduct.setStock(Integer.parseInt(inventoryTextField.getText()));
-            newProduct.setPrice(Double.parseDouble(priceTextField.getText()));
-            newProduct.setMin(Integer.parseInt(minTextField.getText()));
-            newProduct.setMax(Integer.parseInt(maxTextField.getText()));
+            newProduct.setName(name);
+            newProduct.setStock(stock);
+            newProduct.setPrice(price);
+            newProduct.setMin(min);
+            newProduct.setMax(max);
+            Inventory.addProduct(newProduct);
             try {
-                toMainMenu(actionEvent, newProduct);
+                toMainMenu(actionEvent);
             } catch (IOException e ) {
                 System.out.println(e);
             }
         }
     }
 
+    /**
+     * Grabs the currently selected part from partsTableAll and adds it to the associated
+     * parts list of newProduct.
+     * <br>
+     * FUTURE ENHANCEMENT(1): Disallow duplicate parts from being associated.
+     * <br>
+     * FUTURE ENHANCEMENT(2): Add a "Disassociate All Parts" Button.
+     * @param actionEvent Add Part button is clicked.*/
     public void addSelectedPartHandler(ActionEvent actionEvent) {
         try {
             Part selectedPart = (Part)partsTableAll.getSelectionModel().getSelectedItem();
@@ -107,14 +125,33 @@ public class AddProductController implements Initializable {
         }
     }
 
+    /**
+     * Grabs the currently selected part from partsTableAssoc. Throws an alert to get
+     * confirmation from user to disassociate part. If user selects YES, part is removed
+     * from newProduct associate parts list.
+     * @param actionEvent Remove Associated Part button is clicked.
+     * <br>
+     * FUTURE ENHANCEMENT: Add a checkbox to allow user to disable confirmation dialog box.*/
     public void removeAssocPartHandler(ActionEvent actionEvent) {
         try {
-            newProduct.deleteAssociatedPart((Part)partsTableAssoc.getSelectionModel().getSelectedItem());
+            Part selectedPart = (Part)partsTableAssoc.getSelectionModel().getSelectedItem();
+            String alertString = "Are you sure you wish to disassociate " + selectedPart.getName() +
+                    " from this product?";
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, alertString, ButtonType.YES, ButtonType.CANCEL);
+            alert.setTitle("Disassociate Part Confirmation");
+            alert.setHeaderText("Disassociate Part");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                newProduct.deleteAssociatedPart((Part)partsTableAssoc.getSelectionModel().getSelectedItem());
+            }
         } catch (Exception e) {
             System.out.println("Problem removing associated part.");
         }
     }
 
+    /**
+     * Changes scene to the main menu.
+     * @param actionEvent Cancel button is clicked.*/
     public void toMainMenu(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/mainForm.fxml"));
         Parent root = loader.load();
@@ -124,17 +161,4 @@ public class AddProductController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
-    public void toMainMenu(ActionEvent actionEvent, Product product) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/mainForm.fxml"));
-        Parent root = loader.load();
-        MainController mc = loader.getController();
-        mc.addProductFromForm(product);
-        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 850, 600);
-        stage.setTitle("Main Form");
-        stage.setScene(scene);
-        stage.show();
-    }
-
 }

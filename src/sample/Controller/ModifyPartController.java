@@ -13,16 +13,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import sample.Controller.AddPartController.*;
+
 import sample.Model.InHousePart;
 import sample.Model.Inventory;
 import sample.Model.OutsourcedPart;
 import sample.Model.Part;
 
-import static sample.Controller.fieldValidationUtil.*;
-import static sample.Controller.fieldValidationUtil.parseMax;
-
-
+/**
+ * Controller for modifyPartForm*/
 public class ModifyPartController implements Initializable {
 
     public TableView partsTable;
@@ -41,11 +39,17 @@ public class ModifyPartController implements Initializable {
     public TextField variableTextField;
     private Part selectedPart;
 
-    //This constructor is used to pass the selected Part object from MainController
+    /**
+     *Constructor is used to pass the selected part from MainController to this controller.
+     * @param selectedPart The selected Part object from the Part TableView in MainController.*/
     public ModifyPartController(Part selectedPart) {
         this.selectedPart = selectedPart;
+        //String selectedClassName = (String)selectedPart.getClass().getSimpleName();
     }
 
+    /**
+     * Reads data from the Part object that was passed in and fills the appropriate text fields.
+     * with the data. Also sets initial radio button appropriately.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         idTextField.setText(Integer.toString(selectedPart.getId()));
@@ -59,9 +63,20 @@ public class ModifyPartController implements Initializable {
     }
 
 
-    //Validates entries in text fields. If not valid, prints error messages to error log.
-    //If valid, generates a new Part object of appropriate subclass using entered field values and the ID
-    //value from the selectedPart passed in from MainController.
+    /**
+     * Validates data in text fields. Adds errorMessage to errorLog if problem found. If all data
+     * validates, creates a new Part object with the new data read from the text fields. Preserves
+     * ID of existing part by reading it from selectedPart. Updated Part is passed into overloaded
+     * toMainMenu method.
+     * <br>
+     * RUNTIME ERROR: IDs were not being preserved. After clicking the save button, the part would be
+     * assigned a new ID. This is due to the fact that both InHousePart and OutsourcedPart class
+     * constructors call generatePartId from UniqueID class.
+     * <br>
+     * SOLUTION: The method first instantiates a Part object of appropriate subclass using default
+     * constructor, which does not call generatePartId. Then, setter methods are used to manually
+     * assign plug in values. ID is assigned from the selectedPart object to preserve original ID.
+     * @param actionEvent Save button is clicked.*/
     public void modifyPartHandler(ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         boolean hasException = false;
@@ -76,23 +91,23 @@ public class ModifyPartController implements Initializable {
         String companyName = "";
         //Parse & validate field entries and assign them to appropriate variable.
         //The parse functions print to errorLog if no value is entered.
-        name = fieldValidationUtil.parseName(nameTextField, name, errorLog);
-        stock = fieldValidationUtil.parseStock(inventoryTextField, stock, errorLog);
-        price = fieldValidationUtil.parsePrice(priceTextField, price, errorLog);
-        min = fieldValidationUtil.parseMin(minTextField, min, errorLog);
-        max = fieldValidationUtil.parseMax(maxTextField, max, errorLog);
+        name = FieldValidationUtil.parseName(nameTextField, errorLog);
+        stock = FieldValidationUtil.parseStock(inventoryTextField, errorLog);
+        price = FieldValidationUtil.parsePrice(priceTextField, errorLog);
+        min = FieldValidationUtil.parseMin(minTextField, errorLog);
+        max = FieldValidationUtil.parseMax(maxTextField, errorLog);
 
         //Call appropriate parse function depending on selected radio button.
         if (group.getSelectedToggle() == inhouseRadioButton) {
-            machineId = fieldValidationUtil.parseMachineId(variableTextField, machineId, errorLog);
+            machineId = FieldValidationUtil.parseMachineId(variableTextField, errorLog);
             inHouseIsSelected = true;
         } else {
-            companyName = fieldValidationUtil.parseCompanyName(variableTextField, companyName, errorLog);
+            companyName = FieldValidationUtil.parseCompanyName(variableTextField, errorLog);
             inHouseIsSelected = false;
         }
         //validateLogic verifies that Integer field values make sense. Prints to errorLog if
         //problem found
-        fieldValidationUtil.validateLogic(stock, min, max, errorLog);
+        FieldValidationUtil.validateLogic(stock, min, max, errorLog);
         //Determine whether any exceptions have been found by checking whether errorLog is empty.
         if (!errorLog.getChildren().isEmpty()) {
             hasException = true;
@@ -131,6 +146,9 @@ public class ModifyPartController implements Initializable {
         }
     }
 
+    /**
+     *Handles changing over the variable field when radio button is clicked.
+     * @param actionEvent Radio button is clicked.*/
     public void changePartSourceHandler(ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         variableTextField.clear();
@@ -141,17 +159,16 @@ public class ModifyPartController implements Initializable {
         this.selectedPart = selectedPart;
     }
 
-    //Checks whether selected part is inhouse or outsourced based on inInHouse member variable of Part abstract class
-    //and sets the variable text field accordingly.
-    public void setInitialVariableField() {
-        if(selectedPart.isInHouse()) {
-            //System.out.println("selectedPart.isInHouse evaluated true");
+    /**
+     * Checks the subclass of the passed in Part object and sets the variable field when
+     * form is first opened.*/
+    private void setInitialVariableField() {
+        if(selectedPart.getClass() == InHousePart.class) {
             variableLabel.setText("Machine ID");
             InHousePart selectedInHousePart = (InHousePart) selectedPart;
             String machineIdText = Integer.toString(selectedInHousePart.getMachineId());
             variableTextField.setText(machineIdText);
         } else {
-            //System.out.println("selectedPart.isInHouse evaluated" + selectedPart.isInHouse());
             variableLabel.setText("Company Name");
             OutsourcedPart selectedOutsourcedPart = (OutsourcedPart) selectedPart;
             String companyNameText = selectedOutsourcedPart.getCompanyName();
@@ -159,62 +176,39 @@ public class ModifyPartController implements Initializable {
         }
     }
 
-    public void setInitialToggle() {
-        if(selectedPart.isInHouse()) {
-            //System.out.println("selectedPart.isInHouse evaluated true");
+    /**
+     * Checks the subclass of the passed in Part object and sets the initial radio toggle
+     * when form is first opened.*/
+    private void setInitialToggle() {
+        if(selectedPart.getClass() == InHousePart.class) {
+            System.out.println("selectedPart.getClass().getSimpleName == 'InHousePart' evaluated true");
             group.selectToggle(inhouseRadioButton);
         } else {
-            //System.out.println("selectedPart.isInHouse evaluated" + selectedPart.isInHouse());
             group.selectToggle(outsourcedRadioButton);
         }
     }
 
-    public void setVariableField() {
-
+    /**
+     * Helper function that simply checks which radio button is selected and changes
+     * the variable field label text accordingly.*/
+    private void setVariableField() {
         if (group.getSelectedToggle() == inhouseRadioButton) {
             variableLabel.setText("Machine ID");
         } else {
             variableLabel.setText("Company Name");
         }
-
     }
-
-
-
-    public void generateNewPart () {
-        System.out.println(selectedPart.getName());
-    }
-
+    /**
+     * Simply changes scene to main menu.
+     * @param actionEvent Cancel button is clicked.*/
     public void toMainMenu(ActionEvent actionEvent) throws IOException {
         //Parent root = FXMLLoader.load(getClass().getResource("/sample/View/mainForm.fxml"));
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/mainForm.fxml"));
         Parent root = loader.load();
-
-
         Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 850, 600);
         stage.setTitle("Main Form");
         stage.setScene(scene);
         stage.show();
     }
-
-    public void toMainMenu(ActionEvent actionEvent, Part part) throws IOException {
-        //Parent root = FXMLLoader.load(getClass().getResource("/sample/View/mainForm.fxml"));
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/mainForm.fxml"));
-        Parent root = loader.load();
-
-        MainController mc = loader.getController();
-        mc.addPartFromForm(part);
-
-        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 850, 600);
-        stage.setTitle("Main Form");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-
-
 }

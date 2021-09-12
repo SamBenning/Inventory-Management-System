@@ -1,28 +1,21 @@
 package sample.Model;
+/**
+ * Supplied class Part.java
+ */
 
-import javafx.collections.ObservableList;
-import sample.Controller.UniqueID;
-
+/**
+ *
+ * @author Samuel Benning
+ */
 public abstract class Part {
-
     private int id;
     private String name;
     private double price;
     private int stock;
     private int min;
     private int max;
-    private boolean isInHouse;
-
-    public Part(String name, double price, int stock, int min, int max, boolean isInHouse) {
-
-        this.isInHouse = isInHouse;
-        if (isInHouse) {
-            this.id = UniqueID.generatePartId();
-        } else {
-            this.id = UniqueID.generatePartOutsourcedId();
-        }
-
-
+    public Part(int id, String name, double price, int stock, int min, int max) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -30,68 +23,87 @@ public abstract class Part {
         this.max = max;
     }
 
-    public Part() {
-        this.id = 0;
-        this.name = "";
-        this.price = -1;
-        this.stock = -1;
-        this.min = -1;
-        this.max = -1;
-    }
-
+    /**
+     * @return the id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @param id the id to set
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name the name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return the price
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * @param price the price to set
+     */
     public void setPrice(double price) {
         this.price = price;
     }
 
+    /**
+     * @return the stock
+     */
     public int getStock() {
         return stock;
     }
 
+    /**
+     * @param stock the stock to set
+     */
     public void setStock(int stock) {
         this.stock = stock;
     }
 
+    /**
+     * @return the min
+     */
     public int getMin() {
         return min;
     }
 
+    /**
+     * @param min the min to set
+     */
     public void setMin(int min) {
         this.min = min;
     }
 
+    /**
+     * @return the max
+     */
     public int getMax() {
         return max;
     }
 
+    /**
+     * @param max the max to set
+     */
     public void setMax(int max) {
         this.max = max;
-    }
-
-    public boolean isInHouse() {
-        return isInHouse;
-    }
-
-    public void setInHouse(boolean inHouse) {
-        isInHouse = inHouse;
     }
 }

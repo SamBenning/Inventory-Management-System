@@ -6,9 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,6 +18,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for modifyProductForm*/
 public class ModifyProductController implements Initializable {
 
     private Product selectedProduct;
@@ -42,10 +42,16 @@ public class ModifyProductController implements Initializable {
     public TableColumn partUnitCostColAssoc;
 
 
+    /**
+     *Constructor is used to pass the selected part from MainController to this controller.
+     * @param selectedProduct The selected Product object from the Product TableView in MainController.*/
     public ModifyProductController(Product selectedProduct) {
         this.selectedProduct = selectedProduct;
     }
 
+    /**
+     * Sets cell value factories for both Table Views. Reads data from the Product object
+     * that was passed in and fills the appropriate text fields. with the data.*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partIdColAll.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -67,6 +73,21 @@ public class ModifyProductController implements Initializable {
 
     }
 
+    /**
+     * Validates data in text fields. Adds errorMessage to errorLog if problem found. If all data
+     * validates, creates a new Product object with the new data read from the text fields.
+     * and associated parts TableView.
+     * Preserves ID of existing Product by reading it from selectedProduct. Updated Product is passed into overloaded
+     * toMainMenu method.
+     * <br>
+     * RUNTIME ERROR: IDs were not being preserved. After clicking the save button, the product would be
+     * assigned a new ID. This is due the Product class constructor calling generateProductID from
+     * UniqueID class.
+     * <br>
+     * SOLUTION: The method first instantiates a Product object using default
+     * constructor, which does not call generatePartId. Then, setter methods are used to manually
+     * assign plug in values. ID is assigned from the selectedProduct object to preserve original ID.
+     * @param actionEvent Save button is clicked.*/
     public void modifyProductHandler (ActionEvent actionEvent) {
         errorLog.getChildren().clear();
         boolean hasException = false;
@@ -77,13 +98,13 @@ public class ModifyProductController implements Initializable {
         int min = -1;
         int max = -1;
 
-        name = fieldValidationUtil.parseName(nameTextField, name, errorLog);
-        stock = fieldValidationUtil.parseStock(inventoryTextField, stock, errorLog);
-        price = fieldValidationUtil.parsePrice(priceTextField, price, errorLog);
-        min = fieldValidationUtil.parseMin(minTextField, min, errorLog);
-        max = fieldValidationUtil.parseMax(maxTextField, max, errorLog);
+        name = FieldValidationUtil.parseName(nameTextField, errorLog);
+        stock = FieldValidationUtil.parseStock(inventoryTextField, errorLog);
+        price = FieldValidationUtil.parsePrice(priceTextField, errorLog);
+        min = FieldValidationUtil.parseMin(minTextField, errorLog);
+        max = FieldValidationUtil.parseMax(maxTextField, errorLog);
 
-        fieldValidationUtil.validateLogic(stock, min, max, errorLog);
+        FieldValidationUtil.validateLogic(stock, min, max, errorLog);
 
         if (!errorLog.getChildren().isEmpty()) {
             hasException = true;
@@ -108,7 +129,11 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Gets selected Part from partsTableAll and adds it to partsTableAssoc.
+     * @param actionEvent Add Part button is clicked.*/
     public void addSelectedPartHandler(ActionEvent actionEvent) {
+
         try {
             Part selectedPart = (Part)partsTableAll.getSelectionModel().getSelectedItem();
             selectedProduct.addAssociatedPart(selectedPart);
@@ -118,14 +143,33 @@ public class ModifyProductController implements Initializable {
         }
     }
 
+    /**
+     * Grabs the currently selected part from partsTableAssoc. Throws an alert to get
+     * confirmation from user to disassociate part. If user selects YES, part is removed
+     * from newProduct associate parts list.
+     * @param actionEvent Remove Associated Part button is clicked.
+     * <br>
+     * FUTURE ENHANCEMENT: Add a checkbox to allow user to disable confirmation dialog box.*/
     public void removeAssocPartHandler(ActionEvent actionEvent) {
         try {
-            selectedProduct.deleteAssociatedPart((Part)partsTableAssoc.getSelectionModel().getSelectedItem());
+            Part selectedPart = (Part)partsTableAssoc.getSelectionModel().getSelectedItem();
+            String alertString = "Are you sure you wish to disassociate " + selectedPart.getName() +
+                    " from this product?";
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, alertString, ButtonType.YES, ButtonType.CANCEL);
+            alert.setTitle("Disassociate Part Confirmation");
+            alert.setHeaderText("Disassociate Part");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                selectedProduct.deleteAssociatedPart((Part)partsTableAssoc.getSelectionModel().getSelectedItem());
+            }
         } catch (Exception e) {
             System.out.println("Problem removing associated part.");
         }
     }
 
+    /**
+     * Changes scene to the main menu.
+     * @param actionEvent Cancel button is clicked.*/
     public void toMainMenu(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/mainForm.fxml"));
         Parent root = loader.load();
@@ -135,17 +179,4 @@ public class ModifyProductController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
-    public void toMainMenu(ActionEvent actionEvent, Product product) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/View/mainForm.fxml"));
-        Parent root = loader.load();
-        MainController mc = loader.getController();
-        mc.addProductFromForm(product);
-        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 850, 600);
-        stage.setTitle("Main Form");
-        stage.setScene(scene);
-        stage.show();
-    }
-
 }

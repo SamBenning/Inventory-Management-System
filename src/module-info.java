@@ -4,6 +4,6 @@ module C482 {
 
     //exports sample.Controller;
     opens sample.Controller;
-    opens sample.Model to javafx.base;
+    opens sample.Model;
     opens sample to javafx.graphics;
 }
